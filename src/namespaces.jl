@@ -21,6 +21,7 @@ function rimport(pkg::String, s::Symbol=:__anonymous__)
     else
         ns = rcall(:asNamespace, pkg)
         members = rcopy(Vector{String}, rcall(:getNamespaceExports, ns))
+        # TODO: Sanitize here?
         filter!(x -> !(x in reserved), members)
         m = Module(s, false)
         id = Expr(:const, Expr(:(=), :__package__, pkg))
